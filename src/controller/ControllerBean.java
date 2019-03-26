@@ -61,11 +61,12 @@ public class ControllerBean {
 		 return GestorBD.readVideojuegos();
 	}
 	
-	// Update
+	// Update HIBERNATE
 	public void updateVideojuego() {
 		Videojuego juego = new Videojuego(clave, nombre, genero, plataforma, precio);
+		HibernateVideojuegoService service = new HibernateVideojuegoService();
 		
-		if (GestorBD.updateVideojuego(juego) != 0) {
+		if (service.updateVideojuego(juego) != 0) {
 			setMensaje("Se ha modificado el videojuego con clave " + juego.getClave() + "!");
 			setColorMensaje("green");
 		} else {
