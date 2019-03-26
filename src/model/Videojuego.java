@@ -1,11 +1,20 @@
 package model;
 
+import javax.persistence.*;
+
+@Entity(name="videojuegos")
 public class Videojuego {
 
+	@Id
+	@Column(name="clave")
 	private int clave;
+	@Column(name="nombre")
 	private String nombre;
+	@Column(name="genero")
 	private String genero;
+	@Column(name="plataforma")
 	private String plataforma;
+	@Column(name="precio")
 	private double precio;
 	
 	public Videojuego() {
