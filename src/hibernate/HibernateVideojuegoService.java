@@ -16,6 +16,17 @@ public class HibernateVideojuegoService implements VideojuegoService{
 	private static final String TABLE_NAME = "videojuegos";
 
 	@Override
+	public ArrayList<Videojuego> getVideojuegos() {
+		try (Session session = SessionUtil.getSession()) {
+			return getVideojuegos(session);
+		}
+	}
+	
+	private ArrayList<Videojuego> getVideojuegos(Session session) {
+		return new ArrayList<Videojuego>(session.createQuery("from " + TABLE_NAME, Videojuego.class).list());
+	}
+	
+	@Override
 	public int addVideojuego(Videojuego juego) {
 		int result = 0;
 		

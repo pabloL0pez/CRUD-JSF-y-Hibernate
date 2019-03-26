@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import model.Videojuego;
 
 public interface VideojuegoService {
+	
+	public ArrayList<Videojuego> getVideojuegos();
 
 	public int addVideojuego(Videojuego juego);
 	

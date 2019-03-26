@@ -30,7 +30,7 @@ public class ControllerBean {
 	private String colorMensaje = "purple";
 
 	public ControllerBean() {
-		juegos = GestorBD.readVideojuegos();
+		juegos = new HibernateVideojuegoService().getVideojuegos();
 	}
 	
 	/* Métodos CRUD */
@@ -57,9 +57,9 @@ public class ControllerBean {
 		}
 	}
 	
-	// Read
+	// Read HIBERNATE
 	public ArrayList<Videojuego> readVideojuegos() {
-		 return GestorBD.readVideojuegos();
+		 return new HibernateVideojuegoService().getVideojuegos();
 	}
 	
 	// Update HIBERNATE
