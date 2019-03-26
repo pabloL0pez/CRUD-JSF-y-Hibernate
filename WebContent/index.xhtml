@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<head>
+  <title><ui:insert name="title">Polibyus - Videojuegos</ui:insert></title>
+  <link rel="stylesheet" href="./resources/styles.css"></link>
+  <link href="https://fonts.googleapis.com/css?family=Sniglet" rel="stylesheet"></link>
+</head>
+
+<body>
+	<div style="margin-left: 40px;">
+		<h1>Polibyus - CRUD Videojuegos</h1><br/>
+		<span>Catálogo de videojuegos:</span><br/><br/><br/>
+		<h:form id="form">
+			<div style="overflow-y:auto;">
+				<h:dataTable value="#{controller.juegos}" var="juegos">
+					<h:column>
+						<f:facet name="header">Clave</f:facet>
+						#{juegos.clave}
+					</h:column>
+					
+					<h:column>
+						<f:facet name="header">Nombre</f:facet>
+						#{juegos.nombre}
+					</h:column>
+					
+					<h:column>
+						<f:facet name="header">Genero</f:facet>
+						#{juegos.genero}
+					</h:column>
+					
+					<h:column>
+						<f:facet name="header">Plataforma</f:facet>
+						#{juegos.plataforma}
+					</h:column>
+					
+					<h:column>
+						<f:facet name="header">Precio</f:facet>
+						#{juegos.precio}
+					</h:column>
+				</h:dataTable>
+				<br/><br/>
+				<h:commandButton id="filter" value="Filtrar" align="left" action="filtro.xhtml"></h:commandButton>
+			</div>
+			<div>
+				<h:commandButton value="Agregar videojuego" action="create.xhtml"></h:commandButton>
+				<h:commandButton value="Modificar videojuego" action="update.xhtml"></h:commandButton>
+				<h:commandButton value="Borrar videojuego" action="delete.xhtml"></h:commandButton><br/><br/>
+			</div>
+		</h:form>
+	</div>
+</body>
+
+</html>

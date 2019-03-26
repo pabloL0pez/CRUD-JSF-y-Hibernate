@@ -1,0 +1,22 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      
+	<head>
+	  <title><ui:insert name="title">Polibyus - Videojuegos</ui:insert></title>
+	  <link rel="stylesheet" href="./resources/styles.css"></link>
+	  <link href="https://fonts.googleapis.com/css?family=Sniglet" rel="stylesheet"></link>
+	  <script src="./resources/scripts.js"></script>
+	</head>
+
+	<body>
+		<center>
+			<h1 style="color: #{controller.colorMensaje};">#{controller.mensaje}</h1><br/><br/><br/>
+			<h:commandButton value="Volver al inicio" action="index.xhtml"></h:commandButton>
+		</center>
+	</body>
+
+</html>

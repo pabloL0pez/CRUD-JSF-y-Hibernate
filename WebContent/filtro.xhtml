@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      
+	<head>
+	  <title><ui:insert name="title">Polibyus - Videojuegos</ui:insert></title>
+	  <link rel="stylesheet" href="./resources/styles.css"></link>
+	  <link href="https://fonts.googleapis.com/css?family=Sniglet" rel="stylesheet"></link>
+	  <script src="./resources/scripts.js"></script>
+	</head>
+
+	<body>
+		<div style="margin-left: 40px;">
+			<h1>Filtro de videojuegos</h1><br/>
+			<span>Ingrese los valores por los cuales desea filtrar:</span><br/><br/><br/>
+		</div>
+		<h:form id="form" style="margin-left: 40px;">
+			<span>Clave:</span>
+			<h:inputText id="clave" placeholder="0" value="#{filtro.clave}"></h:inputText><br/><br/>
+			
+			<span>Nombre:</span>
+			<h:inputText id="nombre" value="#{filtro.nombre}"></h:inputText><br/><br/>
+			
+			<span>Género:</span>
+			<h:inputText id="genero" value="#{filtro.genero}"></h:inputText><br/><br/>
+			
+			<span>Plataforma:</span>
+			<h:inputText id="plataforma" value="#{filtro.plataforma}"></h:inputText><br/><br/>
+			
+			<span>Precio:</span>
+			<h:inputText id="precio" placeholder="0" value="#{filtro.precio}"></h:inputText>
+			
+			<h:selectOneMenu value="#{filtro.rango}" style="margin-left: 35px; font-family: 'Sniglet', cursive;
+			font-size: 14px; color: white; border-radius: 4px; background-color: darkorchid;">
+				<f:selectItem itemValue="exactly" itemLabel="Exactamente"></f:selectItem>
+				<f:selectItem itemValue="lower_than" itemLabel="Menor a"></f:selectItem>
+				<f:selectItem itemValue="higher_than" itemLabel="Mayor a"></f:selectItem>
+			</h:selectOneMenu><br/><br/><br/>
+			
+			<h:commandButton value="Aceptar" action="#{lista_filtro.filterVideojuegos}"></h:commandButton>
+			<input type="reset" value="Borrar"></input>
+		</h:form>
+	</body>
+
+</html>
