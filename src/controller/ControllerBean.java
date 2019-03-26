@@ -8,6 +8,7 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
 import hibernate.HibernateVideojuegoService;
+import hibernate.VideojuegoService;
 import model.GestorBD;
 import model.Videojuego;
 
@@ -37,7 +38,7 @@ public class ControllerBean {
 	// Create HIBERNATE
 	public void createVideojuego() {
 		Videojuego juego = new Videojuego(clave, nombre, genero, plataforma, precio);
-		HibernateVideojuegoService service = new HibernateVideojuegoService();
+		VideojuegoService service = new HibernateVideojuegoService();
 		
 		if (service.addVideojuego(juego)!= 0) {
 			setMensaje("Se ha creado el videojuego " + juego.getNombre() + "!");
@@ -64,7 +65,7 @@ public class ControllerBean {
 	// Update HIBERNATE
 	public void updateVideojuego() {
 		Videojuego juego = new Videojuego(clave, nombre, genero, plataforma, precio);
-		HibernateVideojuegoService service = new HibernateVideojuegoService();
+		VideojuegoService service = new HibernateVideojuegoService();
 		
 		if (service.updateVideojuego(juego) != 0) {
 			setMensaje("Se ha modificado el videojuego con clave " + juego.getClave() + "!");
@@ -83,9 +84,11 @@ public class ControllerBean {
 		}
 	}
 	
-	// Delete
+	// Delete HIBERNATE
 	public void deleteVideojuego() {
-		if (GestorBD.deleteVideojuego(clave) != 0) {
+		VideojuegoService service = new HibernateVideojuegoService();
+		
+		if (service.deleteVideojuego(clave) != 0) {
 			setMensaje("Se ha borrado el videojuego con clave " + clave + "!");
 			setColorMensaje("green");
 		} else {

@@ -1,15 +1,19 @@
 package hibernate;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
+import model.QueryBuilder;
 import model.Videojuego;
 import util.SessionUtil;
 
 public class HibernateVideojuegoService implements VideojuegoService{
 	
-	// private static final String TABLE_NAME = "videojuegos";
+	private static final String TABLE_NAME = "videojuegos";
 
 	@Override
 	public int addVideojuego(Videojuego juego) {
@@ -78,9 +82,40 @@ public class HibernateVideojuegoService implements VideojuegoService{
 	}
 
 	@Override
-	public int deleteVideojuego(Videojuego juego) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int deleteVideojuego(int clave) {
+		int result = 0;
+		
+		try (Session session = SessionUtil.getSession()) {
+			Transaction trans = session.beginTransaction();
+			result = deleteVideojuego(clave, session);
+			trans.commit();
+		}
+		
+		return result;
 	}
 	
+	private int deleteVideojuego(int clave, Session session) {
+		int result = 0;
+		Videojuego juego;
+		
+		if ((juego = getVideojuego(new Videojuego(clave), session)) != null) {
+			result = 1;
+			session.remove(juego);
+		}
+		
+		return result;
+	}
+
+	@Override
+	public ArrayList<Videojuego> filterVideojuegos(Videojuego juego, String rango) {
+		List<Videojuego> juegos;
+		
+		try (Session session = SessionUtil.getSession()) {
+			Transaction trans = session.beginTransaction();
+			juegos = new ArrayList<Videojuego>(QueryBuilder.filterSelectHibernate(juego, rango, TABLE_NAME, session).list());
+			trans.commit();
+		}
+		
+		return (ArrayList<Videojuego>) juegos;
+	}
 }

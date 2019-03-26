@@ -29,6 +29,14 @@ public class Videojuego {
 		this.plataforma = plataforma;
 		this.precio = precio;
 	}
+	
+	public Videojuego(int clave) {
+		this.clave = clave;
+		this.nombre = "";
+		this.genero = "";
+		this.plataforma = "";
+		this.precio = 0.0;
+	}
 
 	public int getClave() {
 		return clave;

@@ -1,5 +1,7 @@
 package hibernate;
 
+import java.util.ArrayList;
+
 import model.Videojuego;
 
 public interface VideojuegoService {
@@ -8,5 +10,7 @@ public interface VideojuegoService {
 	
 	public int updateVideojuego(Videojuego juego);
 	
-	public int deleteVideojuego(Videojuego juego);
+	public int deleteVideojuego(int clave);
+	
+	public ArrayList<Videojuego> filterVideojuegos(Videojuego juego, String rango);
 }

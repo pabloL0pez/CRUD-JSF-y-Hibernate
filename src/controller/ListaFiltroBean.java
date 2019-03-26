@@ -2,12 +2,15 @@ package controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
+import hibernate.HibernateVideojuegoService;
+import hibernate.VideojuegoService;
 import model.Filtro;
 import model.GestorBD;
 import model.Videojuego;
@@ -20,16 +23,19 @@ public class ListaFiltroBean {
 	
 	@ManagedProperty(value="#{filtro}")
 	private FiltroBean filtro;
-	private ArrayList<Videojuego> juegos = new ArrayList<Videojuego>();
+	private List<Videojuego> juegos = new ArrayList<Videojuego>();
 	
 	public ListaFiltroBean() {
 		
 	}
 	
 	public void filterVideojuegos() {
-		Filtro filtroJuegos = new Filtro(this.filtro.getClave(), this.filtro.getNombre(),
-				this.filtro.getGenero(), this.filtro.getPlataforma(), this.filtro.getPrecio(), this.filtro.getRango());
-		juegos = GestorBD.filterVideojuegos(filtroJuegos);
+		Videojuego juego = new Videojuego(filtro.getClave(), filtro.getNombre(), filtro.getGenero(), filtro.getPlataforma(),
+				filtro.getPrecio());
+		String rango = filtro.getRango();
+		
+		VideojuegoService service = new HibernateVideojuegoService();
+		juegos = service.filterVideojuegos(juego, rango);
 		
 		filtro.resetValues(); // reinicio los valores del bean filtro al default
 		
@@ -49,7 +55,7 @@ public class ListaFiltroBean {
 	}
 
 	public ArrayList<Videojuego> getJuegos() {
-		return juegos;
+		return (ArrayList<Videojuego>) juegos;
 	}
 
 	public void setJuegos(ArrayList<Videojuego> juegos) {

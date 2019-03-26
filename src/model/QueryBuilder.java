@@ -1,6 +1,10 @@
 package model;
 
 import java.util.HashMap;
+import java.util.Map;
+
+import org.hibernate.Session;
+import org.hibernate.query.Query;
 
 public class QueryBuilder {
 
@@ -81,5 +85,73 @@ public class QueryBuilder {
 	
 	public static String pruebaConstruirCondicion(Filtro filtro) {
 		return construirCondicion(filtro);
+	}
+	
+	public static Query<Videojuego> filterSelectHibernate(Videojuego juego, String rango, String tableName, Session session) {
+		String queryString = "from " + tableName + " t where";
+		Query<Videojuego> query;
+		char[] condicionArray;
+		int index;
+		
+		HashMap<String, String> rangos = new HashMap<String, String>();
+		rangos.put("exactly", "=:");
+		rangos.put("lower_than", "<=:");
+		rangos.put("higher_than", ">=:");
+		
+		Map<String, Boolean> parametros = new HashMap<String, Boolean>();
+		Map<String, Object> getters = new HashMap<String, Object>();
+		getters.put("clave", juego.getClave());
+		getters.put("nombre", juego.getNombre());
+		getters.put("genero", juego.getGenero());
+		getters.put("plataforma", juego.getPlataforma());
+		getters.put("precio", juego.getPrecio());
+		
+		
+		if (juego.getClave() != 0) {
+			queryString = queryString + " and t.clave=:clave";
+			parametros.put("clave", true);
+		}
+		
+		if (juego.getNombre() != null && !juego.getNombre().equals("")) {
+			queryString = queryString + " and t.nombre=:nombre";
+			parametros.put("nombre", true);
+		}
+		
+		if (juego.getGenero() != null && !juego.getGenero().equals("")) {
+			queryString = queryString + " and t.genero=:genero";
+			parametros.put("genero", true);
+		}
+		
+		if (juego.getPlataforma() != null && !juego.getPlataforma().equals("")) {
+			queryString = queryString + " and t.plataforma=:plataforma";
+			parametros.put("plataforma", true);
+		}
+		
+		if (juego.getPrecio() != 0.0) {
+			queryString = queryString + " and t.precio" + rangos.get(rango) + "precio";
+			parametros.put("precio", true);
+		}
+		
+		if(!queryString.equals("from " + tableName + " t where")) {
+			condicionArray = queryString.toCharArray();
+			index = queryString.indexOf("and");
+			for(int i = index; i < index + 4 ; i++) {
+				condicionArray[i] = ' ';
+			}
+			queryString = new String(condicionArray);
+		} else {
+			queryString = "from " + tableName;
+		}
+		
+		query = session.createQuery(queryString, Videojuego.class);
+		
+		for (Map.Entry<String, Boolean> entry : parametros.entrySet()) {
+			if (entry.getValue().booleanValue()) {
+				System.out.println("asdasd");
+				query.setParameter(entry.getKey(), getters.get(entry.getKey()));
+			}
+		}
+		
+		return query;
 	}
 }
