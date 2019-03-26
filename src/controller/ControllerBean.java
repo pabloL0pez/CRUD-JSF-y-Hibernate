@@ -7,6 +7,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
+import hibernate.HibernateVideojuegoService;
 import model.GestorBD;
 import model.Videojuego;
 
@@ -33,11 +34,12 @@ public class ControllerBean {
 	
 	/* Métodos CRUD */
 	
-	// Create
+	// Create HIBERNATE
 	public void createVideojuego() {
 		Videojuego juego = new Videojuego(clave, nombre, genero, plataforma, precio);
+		HibernateVideojuegoService service = new HibernateVideojuegoService();
 		
-		if (GestorBD.createVideojuego(juego) != 0) {
+		if (service.addVideojuego(juego)!= 0) {
 			setMensaje("Se ha creado el videojuego " + juego.getNombre() + "!");
 			setColorMensaje("green");
 		} else {
